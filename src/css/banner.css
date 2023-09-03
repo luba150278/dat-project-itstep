@@ -1,0 +1,114 @@
+@import '_var.css';
+/*===========BANNER++++++++++++*/
+h1 {
+  font-weight: 700;
+  font-size: 55px;
+  line-height: 67px;
+  color: #000000;
+}
+.banner {
+  width: 100%;
+  height: 100vh;
+  background-image: url(../../images/bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+}
+
+.man {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border-radius: 200px 0 200px 0;
+  width: 36vw;
+  height: 64vh;
+  object-fit: cover;
+}
+
+.lv {
+  position: absolute;
+}
+.lv > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.lv1 {
+  bottom: 9%;
+  right: 32.2%;
+  width: 10.8vw;
+  height: 17.1vh;
+}
+.lv2 {
+  bottom: 5.5%;
+  right: 34.1%;
+  width: 7.9vw;
+  height: 11.2vh;
+}
+.lv3 {
+  bottom: 57%;
+  right: 0.6%;
+  width: 10.8vw;
+  height: 17.1vh;
+}
+
+.banner-text-container {
+  padding: 180px 0 40px;
+}
+.title {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.title h1 {
+  width: 513px;
+}
+.title h1 > span {
+  font-weight: 300;
+}
+.title img {
+  width: 32px;
+  height: 25px;
+  margin-top: 28px;
+}
+p.banner-parag {
+  margin-top: 28px;
+  margin-bottom: 23px;
+  font-size: 18px;
+  line-height: 1.22;
+  color: rgba(0, 0, 0, 0.5);
+  max-width: 561px;
+  margin-left: 44px;
+}
+
+.btn {
+  color: var(--white);
+  border-radius: 90px;
+  background-color: var(--link-bg);
+  padding: 14px 50px;
+  border: none;
+  max-width: 100%;
+  font-size: 16px;
+  line-height: 19.5px;
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 220px;
+}
+.btn.banner-btn {
+  margin-left: 44px;
+}
+.btn > a {
+  color: var(--white);
+}
+.btn:hover > a {
+  color: var(--white);
+}
+
+.btn:focus {
+  border: none;
+  outline: none;
+}

@@ -28,7 +28,17 @@
                   <!-- data-attr - користувацький атрібут, який ми можем створювати для відокремлювання елементів -->
                   <div class="dropdown-link">
                     <a href="/about.php">Про Нас</a>
-                    <img src="images/arrow-down.svg" id="openSubMenu" data-attr="about" />
+                    <!--<img src="images/arrow-down.svg" id="openSubMenu" data-attr="about" />-->
+                    <svg id="openSubMenu" data-attr="about" width="12" height="12" viewBox="0 0 12 12" fill="#84C551" xmlns="http://www.w3.org/2000/svg">
+                      <g clip-path="url(#clip0_109_4576)">
+                        <path d="M5.96404 9.42018C5.75026 9.42018 5.53651 9.33806 5.37353 9.17417L0.244696 4.01439C-0.0815652 3.68616 -0.0815652 3.154 0.244696 2.8259C0.570824 2.49781 1.09969 2.49781 1.42598 2.8259L5.96404 7.39157L10.5021 2.82606C10.8284 2.49797 11.3572 2.49797 11.6833 2.82606C12.0097 3.15416 12.0097 3.68632 11.6833 4.01455L6.55455 9.17433C6.39149 9.33824 6.17774 9.42018 5.96404 9.42018Z" />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_109_4576">
+                          <rect width="11.9281" height="12" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
                   </div>
                   <ul class="dropdown-menu" data-attr="about">
                     <li><a href="/about.php">Наша команда</a></li>
@@ -36,11 +46,11 @@
                     <li><a href="#">Договір</a></li>
                   </ul>
                 </li>
-                <li><a href="/order.php">Каталог продукції </a></li>
-                <li><a href="#">Оплата і доставка</a></li>
-                <li><a href="#">Партнери</a></li>
-                <li><a href="#">Новини</a></li>
-                <li><a href="#">Контакти</a></li>
+                <li><a href="/catalog.php">Каталог продукції </a></li>
+                <li><a href="/payment.php">Оплата і доставка</a></li>
+                <li><a href="/partners.php">Партнери</a></li>
+                <li><a href="/news.php">Новини</a></li>
+                <li><a href="/contacts.php">Контакти</a></li>
               </ul>
             </nav>
             <div class="auth flex-aic">
@@ -110,6 +120,7 @@
             7.269zm17.23-5.269 3.23 7.269h-6.46zm0 9.769a3.9 3.9 0 0 1 -3.131-1.5h6.262a3.9 3.9 0 0 1 -3.131 1.5z" />
                 </g>
               </svg>
+              <div class="counter"></div>
             </div>
             <div class="basket-price">
               <div class="header-icon counter-backet" id="backet">
@@ -119,6 +130,7 @@
                   <path d="m24 24a3 3 0 1 0 3 3 3 3 0 0 0 -3-3zm0 4a1 1 0 1 1 1-1 1 1 0 0 1 -1 1z" />
                   <path d="m9 27a3 3 0 1 0 3-3 3 3 0 0 0 -3 3zm4 0a1 1 0 1 1 -1-1 1 1 0 0 1 1 1z" />
                 </svg>
+                <div class="counter"></div>
               </div>
               <p>0,0 грн</p>
             </div>

@@ -10,6 +10,7 @@ document.getElementById('openSubMenu').addEventListener('click', function (e) {
     if (data === checkData) {
       changeImageSrc(element, this);
       element.classList.toggle('show');
+      element.parentElement.classList.toggle('show');
     } else {
       element.classList.add('hidden');
     }
@@ -98,3 +99,48 @@ document.getElementById('modal').addEventListener('click', () => {
 document.getElementById('modalInner').addEventListener('click', (e) => {
   e.stopPropagation();
 });
+
+// Виділення активного посилання
+function setActiveLink() {
+  const href = window.location.pathname;
+  const links = document.querySelectorAll('#headerNavMenu>li>a');
+  Array.from(links).forEach((item) => {
+    if (item.getAttribute('href') === href) {
+      item.classList.add('active');
+      item.parentElement.classList.add('active');
+    } else {
+      item.classList.remove('active');
+      item.parentElement.classList.remove('active');
+    }
+  });
+
+  const dropDounlinks = document.querySelectorAll('#headerNavMenu>li>div>a');
+  Array.from(dropDounlinks).forEach((item) => {
+    if (item.getAttribute('href') === href) {
+      item.classList.add('active');
+      item.parentElement.parentElement.classList.add('active');
+    } else {
+      item.classList.remove('active');
+      item.parentElement.parentElement.classList.remove('active');
+    }
+  });
+
+}
+setActiveLink();
+
+//Встановлюємо/прибираємо позначку з кількістю
+function setCompareCartCount() {
+  const compare = localStorage.getItem("compare") ? JSON.parse(localStorage.getItem("compare")) : []
+  const cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
+  if (compare.length > 0) {
+    document.querySelector(".counter-compare>.counter").textContent = compare.length;
+    document.querySelector(".counter-compare>.counter").classList.add('show')
+  }
+
+  if (cart.length > 0) {
+    document.querySelector(".counter-backet>.counter").textContent = cart.length;  
+    document.querySelector(".counter-backet>.counter").classList.add('show')    
+  }
+}
+
+setCompareCartCount()

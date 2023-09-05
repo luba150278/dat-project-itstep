@@ -1,4 +1,5 @@
 :root {
+  --active: rgba(255, 255, 255, 0.8);
   --drop-down: #347153;
   --bg: #1E6140;
   --white: #ffffff;

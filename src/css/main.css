@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
 @import '_var.css';
 
 * {
@@ -7,7 +7,7 @@
   padding: 0;
 }
 html {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   line-height: 19.5px;
   font-weight: 400;
@@ -15,8 +15,8 @@ html {
 body.add-modal {
   overflow: hidden;
 }
-body{
-  background-color: var(--page-bg)
+body {
+  background-color: var(--page-bg);
 }
 h2 {
   font-size: 45px;
@@ -29,7 +29,7 @@ a {
 ul {
   list-style: none;
 }
-section{
+section {
   padding-top: 20px;
 }
 .container {
@@ -37,7 +37,7 @@ section{
   margin: 0 auto;
   max-width: 100%;
 }
-.container.big-container{
+.container.big-container {
   width: 1348px;
 }
 .hidden {
@@ -77,7 +77,15 @@ section{
 .dropdown {
   position: relative;
 }
-
+.dropdown > div > svg {
+  transition: all 0.5s ease;
+}
+.dropdown.show {
+  background-color: var(--drop-down);
+}
+.dropdown.show > div > svg {
+  transform: rotate(180deg);
+}
 .dropdown > ul {
   background: var(--drop-down);
   border-radius: 0 0px 20px 20px;
@@ -95,7 +103,8 @@ section{
   position: relative;
 }
 
-.dropdown-link > img {
+.dropdown-link > img,
+.dropdown-link > svg {
   position: absolute;
   top: 5px;
   right: -16px;
@@ -115,9 +124,18 @@ section{
 }
 
 .nav-menu > li:hover {
-  background: var(--bg);
+  background: var(--drop-down);
 }
 
+.nav-menu > li.active {
+  background: var(--accent-color);
+}
+.nav-menu > li.active > div > svg {
+  fill: var(--white);
+}
+.nav-menu > li > a.active {
+  color: var(--white);
+}
 .nav-menu > li:first-child {
   padding-right: 22px;
   padding-left: 12px;
@@ -166,7 +184,7 @@ section{
 }
 
 .search-area::before {
-  content: "";
+  content: '';
   width: 15px;
   height: 15px;
   background-image: url(/images/loupe.png);
@@ -215,7 +233,7 @@ section{
   text-decoration-line: none;
   color: #000000;
 }
-.tel-number > img{
+.tel-number > img {
   cursor: pointer;
 }
 .header-icon {
@@ -292,14 +310,11 @@ section{
   gap: 8px;
 }
 
-.counter-compare,
-.counter-backet {
+.header-icon {
   position: relative;
 }
-
-.counter-compare::before {
-  content: "3";
-  display: flex;
+.header-icon > .counter {
+  display: none;
   font-weight: 400;
   font-size: 10px;
   line-height: 12px;
@@ -307,8 +322,8 @@ section{
   text-align: center;
   justify-content: center;
   color: #ffffff;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   background: var(--accent-color);
   background-repeat: no-repeat;
   border-radius: 50%;
@@ -317,26 +332,8 @@ section{
   left: 26px;
   z-index: 1;
 }
-
-.counter-backet::before {
-  content: "5";
+.header-icon > .counter.show {
   display: flex;
-  font-weight: 400;
-  font-size: 10px;
-  line-height: 12px;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  color: #ffffff;
-  width: 14px;
-  height: 14px;
-  background: var(--accent-color);
-  background-repeat: no-repeat;
-  border-radius: 50%;
-  position: absolute;
-  top: 0;
-  left: 26px;
-  z-index: 1;
 }
 
 /************** THIRD LINE *************/
@@ -404,7 +401,7 @@ section{
   outline: 1px solid #e74e13;
   border: none;
 }
-a:focus{
+a:focus {
   outline: none;
 }
 

@@ -144,3 +144,11 @@ function setCompareCartCount() {
 }
 
 setCompareCartCount()
+function deleteBackgroundImage(){
+  const currentURL = window.location.href;
+  if (currentURL !== "http://example.com/") {
+    const banner = document.querySelector('.banner');
+    banner.style.backgroundImage = "none";
+  }
+}
+deleteBackgroundImage();

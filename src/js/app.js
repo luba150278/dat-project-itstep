@@ -124,23 +124,145 @@ function setActiveLink() {
       item.parentElement.parentElement.classList.remove('active');
     }
   });
-
 }
 setActiveLink();
 
 //Встановлюємо/прибираємо позначку з кількістю
 function setCompareCartCount() {
-  const compare = localStorage.getItem("compare") ? JSON.parse(localStorage.getItem("compare")) : []
-  const cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
+  const compare = localStorage.getItem('compare')
+    ? JSON.parse(localStorage.getItem('compare'))
+    : [];
+  const cart = localStorage.getItem('cart')
+    ? JSON.parse(localStorage.getItem('cart'))
+    : [];
   if (compare.length > 0) {
-    document.querySelector(".counter-compare>.counter").textContent = compare.length;
-    document.querySelector(".counter-compare>.counter").classList.add('show')
+    document.querySelector('.counter-compare>.counter').textContent =
+      compare.length;
+    document.querySelector('.counter-compare>.counter').classList.add('show');
   }
 
   if (cart.length > 0) {
-    document.querySelector(".counter-backet>.counter").textContent = cart.length;  
-    document.querySelector(".counter-backet>.counter").classList.add('show')    
+    document.querySelector('.counter-backet>.counter').textContent =
+      cart.length;
+    document.querySelector('.counter-backet>.counter').classList.add('show');
   }
 }
 
-setCompareCartCount()
+setCompareCartCount();
+
+function deleteBackgroundImage() {
+  const currentURL = window.location.href;
+  if (currentURL !== "http://example.com/") {
+    const banner = document.querySelector(".banner");
+    banner.style.backgroundImage = "none";
+  }
+}
+deleteBackgroundImage();
+
+// Реєстрація
+async function handleRegistration() {
+  const registrationForm = document.getElementById('registration-form');
+  const errorMessage = document.getElementById('error-message');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const confirmPasswordInput = document.getElementById('confirm_password');
+  const agreementCheckbox = document.getElementById('agreement');
+
+  registrationForm &&  registrationForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!agreementCheckbox.checked) {
+      errorMessage.textContent = 'Погодьтеся з умовами перед відправкою форми.';
+      errorMessage.style.display = 'block';
+      setTimeout(() => {
+        errorMessage.textContent = '';
+        errorMessage.style.display = 'none';
+      }, 5000);
+      return;
+    }
+
+    const email = emailInput.value;
+    const password = passwordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailPattern.test(email)) {
+      errorMessage.textContent = 'Введіть коректний email.';
+      errorMessage.style.display = 'block';
+      setTimeout(() => {
+        errorMessage.textContent = '';
+        errorMessage.style.display = 'none';
+      }, 5000);
+      return;
+    }
+
+    const passwordPattern = /^(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$/;
+    if (!passwordPattern.test(password)) {
+      errorMessage.textContent =
+        'Пароль має містити мінімум 8 символів, принаймні одну велику літеру та принаймні один спец символ';
+      errorMessage.style.display = 'block';
+      setTimeout(() => {
+        errorMessage.textContent = '';
+        errorMessage.style.display = 'none';
+      }, 5000);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      errorMessage.textContent = 'Паролі не співпадають.';
+      errorMessage.style.display = 'block';
+      setTimeout(() => {
+        errorMessage.textContent = '';
+        errorMessage.style.display = 'none';
+      }, 5000);
+      return;
+    }
+
+    const data = {
+      email,
+      password,
+    };
+    console.log(data.email, data.password);
+    try {
+      const res = await axios.post(
+        '/api/registration',
+        {
+          email: data.email,
+          password: data.password,
+        },
+        {
+          baseURL: 'https://jwt-form-server.herokuapp.com',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            'Access-Control-Allow-Origin': 'http://example.com/',
+            SameSite: 'None',
+            Secure: true,
+          },
+        }
+      );
+      if (res.data.error) {
+        errorMessage.textContent = res.data.error;
+        errorMessage.style.display = 'block';
+        setTimeout(() => {
+          errorMessage.style.display = 'none';
+        }, 5000);
+        return;
+      }
+      localStorage.setItem('token', res.data.accessToken);
+      localStorage.setItem('user', res.data.user.login);
+      window.location.href = '/personal-cabinet.php';
+    } catch (error) {
+      if (error.response) {
+        errorMessage.textContent = error.res.data.error;
+      } else {
+        console.log(error.data, error.message, 'het');
+        errorMessage.textContent = `Помилка при відправці запиту на сервер. ${error.message}`;
+      }
+      errorMessage.style.display = 'block';
+      setTimeout(() => {
+        errorMessage.style.display = 'none';
+      }, 5000);
+    }
+  });
+}
+handleRegistration();

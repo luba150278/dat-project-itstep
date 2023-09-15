@@ -59,7 +59,7 @@
               </div>
               <div class="login flex-aic">
                 <a href="#">Вхід</a>
-                <a href="#">Реєстрація</a>
+                <a href="/registration.php">Реєстрація</a>
               </div>
             </div>
           </div>

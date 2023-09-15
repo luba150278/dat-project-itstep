@@ -14,11 +14,7 @@
 3. Налаштування хоста
   - відкрити файл c:\Windows\System32\drivers\etc\hosts
   - в кінець файла додати
-  <VirtualHost *:80>
-    ServerAdmin webmaster@localhost
-    DocumentRoot "D:/xampp/htdocs/project_field"
-    ServerName example.com
-    ServerAlias www.example.com
-  </VirtualHost>
+  127.0.0.1 example.com
+  127.0.0.1 www.example.com
 4. Запустити xampp, стартовати apache
 5. В браузері відкрити example.com

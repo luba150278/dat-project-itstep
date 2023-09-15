@@ -1,12 +1,15 @@
 :root {
   --active: rgba(255, 255, 255, 0.8);
   --drop-down: #347153;
-  --bg: #1E6140;
+  --bg: #1e6140;
   --white: #ffffff;
   --accent-color: #84be51;
   --buttonn-bg: #e84e0f;
   --second-accent-color: #8d3200;
   --link-bg: #e74e13;
   --page-bg: #f8f8f8;
-  --text-color: rgba(0,0,0,0.5)
+  --text-color: rgba(0, 0, 0, 0.5);
+  --breadcrumbs-color: #00000080;
+  --breadcrumbs-elipse: #84c551;
+  --form-placeholder: rgb(72, 72, 72);
 }

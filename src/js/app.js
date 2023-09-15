@@ -152,9 +152,9 @@ setCompareCartCount();
 
 function deleteBackgroundImage() {
   const currentURL = window.location.href;
-  if (currentURL !== "http://example.com/") {
-    const banner = document.querySelector(".banner");
-    banner.style.backgroundImage = "none";
+  if (currentURL !== 'http://example.com/') {
+    const banner = document.querySelector('.banner');
+    banner.style.backgroundImage = 'none';
   }
 }
 deleteBackgroundImage();
@@ -168,101 +168,203 @@ async function handleRegistration() {
   const confirmPasswordInput = document.getElementById('confirm_password');
   const agreementCheckbox = document.getElementById('agreement');
 
-  registrationForm &&  registrationForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (!agreementCheckbox.checked) {
-      errorMessage.textContent = 'Погодьтеся з умовами перед відправкою форми.';
-      errorMessage.style.display = 'block';
-      setTimeout(() => {
-        errorMessage.textContent = '';
-        errorMessage.style.display = 'none';
-      }, 5000);
-      return;
-    }
-
-    const email = emailInput.value;
-    const password = passwordInput.value;
-    const confirmPassword = confirmPasswordInput.value;
-
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (!emailPattern.test(email)) {
-      errorMessage.textContent = 'Введіть коректний email.';
-      errorMessage.style.display = 'block';
-      setTimeout(() => {
-        errorMessage.textContent = '';
-        errorMessage.style.display = 'none';
-      }, 5000);
-      return;
-    }
-
-    const passwordPattern = /^(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$/;
-    if (!passwordPattern.test(password)) {
-      errorMessage.textContent =
-        'Пароль має містити мінімум 8 символів, принаймні одну велику літеру та принаймні один спец символ';
-      errorMessage.style.display = 'block';
-      setTimeout(() => {
-        errorMessage.textContent = '';
-        errorMessage.style.display = 'none';
-      }, 5000);
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      errorMessage.textContent = 'Паролі не співпадають.';
-      errorMessage.style.display = 'block';
-      setTimeout(() => {
-        errorMessage.textContent = '';
-        errorMessage.style.display = 'none';
-      }, 5000);
-      return;
-    }
-
-    const data = {
-      email,
-      password,
-    };
-    console.log(data.email, data.password);
-    try {
-      const res = await axios.post(
-        '/api/registration',
-        {
-          email: data.email,
-          password: data.password,
-        },
-        {
-          baseURL: 'https://jwt-form-server.herokuapp.com',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-            'Access-Control-Allow-Origin': 'http://example.com/',
-            SameSite: 'None',
-            Secure: true,
-          },
-        }
-      );
-      if (res.data.error) {
-        errorMessage.textContent = res.data.error;
+  registrationForm &&
+    registrationForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!agreementCheckbox.checked) {
+        errorMessage.textContent =
+          'Погодьтеся з умовами перед відправкою форми.';
         errorMessage.style.display = 'block';
         setTimeout(() => {
+          errorMessage.textContent = '';
           errorMessage.style.display = 'none';
         }, 5000);
         return;
       }
-      localStorage.setItem('token', res.data.accessToken);
-      localStorage.setItem('user', res.data.user.login);
-      window.location.href = '/personal-cabinet.php';
-    } catch (error) {
-      if (error.response) {
-        errorMessage.textContent = error.res.data.error;
-      } else {
-        console.log(error.data, error.message, 'het');
-        errorMessage.textContent = `Помилка при відправці запиту на сервер. ${error.message}`;
+
+      const email = emailInput.value;
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      if (!emailPattern.test(email)) {
+        errorMessage.textContent = 'Введіть коректний email.';
+        errorMessage.style.display = 'block';
+        setTimeout(() => {
+          errorMessage.textContent = '';
+          errorMessage.style.display = 'none';
+        }, 5000);
+        return;
       }
-      errorMessage.style.display = 'block';
-      setTimeout(() => {
-        errorMessage.style.display = 'none';
-      }, 5000);
+
+      const passwordPattern = /^(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$/;
+      if (!passwordPattern.test(password)) {
+        errorMessage.textContent =
+          'Пароль має містити мінімум 8 символів, принаймні одну велику літеру та принаймні один спец символ';
+        errorMessage.style.display = 'block';
+        setTimeout(() => {
+          errorMessage.textContent = '';
+          errorMessage.style.display = 'none';
+        }, 5000);
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        errorMessage.textContent = 'Паролі не співпадають.';
+        errorMessage.style.display = 'block';
+        setTimeout(() => {
+          errorMessage.textContent = '';
+          errorMessage.style.display = 'none';
+        }, 5000);
+        return;
+      }
+
+      const data = {
+        email,
+        password,
+      };
+      console.log(data.email, data.password);
+      try {
+        const res = await axios.post(
+          '/api/registration',
+          {
+            email: data.email,
+            password: data.password,
+          },
+          {
+            baseURL: 'https://jwt-form-server.herokuapp.com',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              'Access-Control-Allow-Origin': 'http://example.com/',
+              SameSite: 'None',
+              Secure: true,
+            },
+          }
+        );
+        if (res.data.error) {
+          errorMessage.textContent = res.data.error;
+          errorMessage.style.display = 'block';
+          setTimeout(() => {
+            errorMessage.style.display = 'none';
+          }, 5000);
+          return;
+        }
+        localStorage.setItem('token', res.data.accessToken);
+        localStorage.setItem('user', res.data.user.login);
+        window.location.href = '/personal-cabinet.php';
+      } catch (error) {
+        if (error.response) {
+          errorMessage.textContent = error.res.data.error;
+        } else {
+          console.log(error.data, error.message, 'het');
+          errorMessage.textContent = `Помилка при відправці запиту на сервер. ${error.message}`;
+        }
+        errorMessage.style.display = 'block';
+        setTimeout(() => {
+          errorMessage.style.display = 'none';
+        }, 5000);
+      }
+    });
+}
+handleRegistration();
+
+//=============SLIDER NEWS===========
+
+const imagesArr = [
+  'images/products/1.png',
+  'images/products/2.png',
+  'images/products/3.png',
+  'images/products/4.png',
+  'images/products/5.jfif',
+  'images/products/6.jfif',
+  'images/products/7.jfif',
+  'images/products/8.jfif',
+  'images/products/9.jfif',
+  'images/products/10.jfif',
+  'images/products/1.png',
+  'images/products/2.png',
+  'images/products/3.png',
+  'images/products/4.png',
+  'images/products/5.jfif',
+  'images/products/6.jfif',
+  'images/products/7.jfif',
+  'images/products/8.jfif',
+  'images/products/9.jfif',
+  'images/products/10.jfif',
+];
+
+const cardWrap = document.querySelector('.card-wrap');
+
+if (cardWrap) {
+  imagesArr.forEach((item, i) => {
+    if (i <= 3) {
+      const div = document.createElement('div');
+      cardWrap.appendChild(div);
+      const img = document.createElement('img');
+      div.appendChild(img);
+      img.setAttribute('src', item);
+      div.classList.add('item');
+      img.setAttribute('alt', `photo-${i + 1}`);
     }
   });
 }
-handleRegistration();
+
+let start = 0;
+document.getElementById('right-arrow').addEventListener('click', () => {
+  if (cardWrap) {
+    start += 4;
+    const a = start;
+    let b = start + 4;
+
+    console.log(a, b);
+    const source = imagesArr.slice(a, b);
+    Array.from(document.querySelectorAll('.card-wrap>.item')).forEach((item) =>
+      item.remove()
+    );
+
+    source.forEach((item, i) => {
+      const div = document.createElement('div');
+      cardWrap.appendChild(div);
+      const img = document.createElement('img');
+      div.appendChild(img);
+      img.setAttribute('src', item);
+      div.classList.add('item');
+      img.setAttribute('alt', `photo-${i + 1}`);
+    });
+    
+    if (start + 4  >= imagesArr.length) {
+      start = -4;
+    }  
+  }
+});
+
+// let start2 = imagesArr.length;
+document.getElementById('left-arrow').addEventListener('click', () => {
+  if (cardWrap) {
+    console.log(start)
+    start = start < 4 ? imagesArr.length : start;
+    const a = start;
+    let b = start - 4;
+
+    console.log(a, b);
+    const source = imagesArr.slice(b, a);
+    Array.from(document.querySelectorAll('.card-wrap>.item')).forEach((item) =>
+      item.remove()
+    );
+
+    source.forEach((item, i) => {
+      const div = document.createElement('div');
+      cardWrap.appendChild(div);
+      const img = document.createElement('img');
+      div.appendChild(img);
+      img.setAttribute('src', item);
+      div.classList.add('item');
+      img.setAttribute('alt', `photo-${i + 1}`);
+    });
+    start -= 4;
+    if (start <= 0) {
+      start = imagesArr.length;
+    }
+  }
+});

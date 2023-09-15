@@ -272,26 +272,21 @@ handleRegistration();
 //=============SLIDER NEWS===========
 
 const imagesArr = [
-  'images/products/1.png',
-  'images/products/2.png',
-  'images/products/3.png',
-  'images/products/4.png',
-  'images/products/5.jfif',
-  'images/products/6.jfif',
-  'images/products/7.jfif',
-  'images/products/8.jfif',
-  'images/products/9.jfif',
-  'images/products/10.jfif',
-  'images/products/1.png',
-  'images/products/2.png',
-  'images/products/3.png',
-  'images/products/4.png',
-  'images/products/5.jfif',
-  'images/products/6.jfif',
-  'images/products/7.jfif',
-  'images/products/8.jfif',
-  'images/products/9.jfif',
-  'images/products/10.jfif',
+  'images/products/1n.png',
+  'images/products/2n.png',
+  'images/products/3n.png',
+  'images/products/4n.png',
+  'images/products/5n.png',
+  'images/products/6n.png',
+  'images/products/7n.png',
+  'images/products/8n.png',
+  'images/products/9n.png',
+  'images/products/10n.png',
+  'images/products/11n.png',
+  'images/products/12n.png',
+  'images/products/13n.png',
+  'images/products/14n.png',
+  'images/products/15n.png',
 ];
 
 const cardWrap = document.querySelector('.card-wrap');
@@ -311,60 +306,105 @@ if (cardWrap) {
 }
 
 let start = 0;
-document.getElementById('right-arrow').addEventListener('click', () => {
+document.getElementById('left-arrow').addEventListener('click', () => {
   if (cardWrap) {
     start += 4;
-    const a = start;
+    let a = start;
     let b = start + 4;
+    let k = 1;
+    console.log('b' + b);
+    while (b > imagesArr.length) {
+      b--;
+      k++;
+    }
 
-    console.log(a, b);
     const source = imagesArr.slice(a, b);
-    Array.from(document.querySelectorAll('.card-wrap>.item')).forEach((item) =>
-      item.remove()
-    );
 
-    source.forEach((item, i) => {
-      const div = document.createElement('div');
-      cardWrap.appendChild(div);
-      const img = document.createElement('img');
-      div.appendChild(img);
-      img.setAttribute('src', item);
-      div.classList.add('item');
-      img.setAttribute('alt', `photo-${i + 1}`);
-    });
-    
-    if (start + 4  >= imagesArr.length) {
-      start = -4;
-    }  
+      Array.from(document.querySelectorAll('.card-wrap>.item')).forEach(
+        (item) => item.remove()
+      );
+      source.forEach((item, i) => {
+        const div = document.createElement('div');
+        cardWrap.appendChild(div);
+        const img = document.createElement('img');
+        div.appendChild(img);
+        img.setAttribute('src', item);
+        div.classList.add('item');
+        img.setAttribute('alt', `photo-${i + 1}`);
+      });
+
+      if (k !== 1) {
+        const source = imagesArr.slice(0, k);
+        source.forEach((item, i) => {
+          const div = document.createElement('div');
+          cardWrap.appendChild(div);
+          const img = document.createElement('img');
+          div.appendChild(img);
+          img.setAttribute('src', item);
+          div.classList.add('item');
+          img.setAttribute('alt', `photo-${i + 1}`);
+        });
+        start = k - 1 - 4;
+      }
+   
   }
 });
 
-// let start2 = imagesArr.length;
-document.getElementById('left-arrow').addEventListener('click', () => {
+
+document.getElementById('right-arrow').addEventListener('click', () => {
   if (cardWrap) {
-    console.log(start)
-    start = start < 4 ? imagesArr.length : start;
+    start = start === 0 ? imagesArr.length : start;
+
+    console.log(start);
     const a = start;
     let b = start - 4;
+    console.log('a,b1: ', a, b);
+    let k = 0;
+    while (b < 0) {
+      b++;
+      k++;
+    }
 
-    console.log(a, b);
+
     const source = imagesArr.slice(b, a);
     Array.from(document.querySelectorAll('.card-wrap>.item')).forEach((item) =>
       item.remove()
     );
 
-    source.forEach((item, i) => {
-      const div = document.createElement('div');
-      cardWrap.appendChild(div);
-      const img = document.createElement('img');
-      div.appendChild(img);
-      img.setAttribute('src', item);
-      div.classList.add('item');
-      img.setAttribute('alt', `photo-${i + 1}`);
-    });
-    start -= 4;
-    if (start <= 0) {
-      start = imagesArr.length;
+
+    if (k !== 0) {
+      let source = imagesArr.slice(imagesArr.length - k, imagesArr.length);
+      source.forEach((item, i) => {
+        const div = document.createElement('div');
+        cardWrap.appendChild(div);
+        const img = document.createElement('img');
+        div.appendChild(img);
+        img.setAttribute('src', item);
+        div.classList.add('item');
+        img.setAttribute('alt', `photo-${i + 1}`);
+      });
+      source = imagesArr.slice(b, a);
+      source.forEach((item, i) => {
+        const div = document.createElement('div');
+        cardWrap.appendChild(div);
+        const img = document.createElement('img');
+        div.appendChild(img);
+        img.setAttribute('src', item);
+        div.classList.add('item');
+        img.setAttribute('alt', `photo-${i + 1}`);
+      });
+      start = imagesArr.length - k;
+    } else {
+      source.forEach((item, i) => {
+        const div = document.createElement('div');
+        cardWrap.appendChild(div);
+        const img = document.createElement('img');
+        div.appendChild(img);
+        img.setAttribute('src', item);
+        div.classList.add('item');
+        img.setAttribute('alt', `photo-${i + 1}`);
+      });
+      start -= 4;
     }
   }
 });

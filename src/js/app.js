@@ -292,119 +292,100 @@ const imagesArr = [
 const cardWrap = document.querySelector('.card-wrap');
 
 if (cardWrap) {
-  imagesArr.forEach((item, i) => {
-    if (i <= 3) {
-      const div = document.createElement('div');
-      cardWrap.appendChild(div);
-      const img = document.createElement('img');
-      div.appendChild(img);
-      img.setAttribute('src', item);
-      div.classList.add('item');
-      img.setAttribute('alt', `photo-${i + 1}`);
-    }
-  });
-}
-
-let start = 0;
-document.getElementById('left-arrow').addEventListener('click', () => {
-  if (cardWrap) {
+  addSlide(imagesArr.slice(0, 4));
+  let start = 0;
+  document.getElementById('right-arrow').addEventListener('click', () => {
     start += 4;
     let a = start;
     let b = start + 4;
     let k = 1;
-    console.log('b' + b);
+
     while (b > imagesArr.length) {
       b--;
       k++;
     }
 
-    const source = imagesArr.slice(a, b);
+    let source = imagesArr.slice(a, b);
+    Array.from(document.querySelectorAll('.card-wrap>.item')).forEach(
+      (item, i) => {
+        setTimeout(() => {
+          item.style.transform = 'translateX(-100vw)';
+        }, i * 50);
+      }
+    );
 
+    setTimeout(() => {
       Array.from(document.querySelectorAll('.card-wrap>.item')).forEach(
         (item) => item.remove()
       );
-      source.forEach((item, i) => {
-        const div = document.createElement('div');
-        cardWrap.appendChild(div);
-        const img = document.createElement('img');
-        div.appendChild(img);
-        img.setAttribute('src', item);
-        div.classList.add('item');
-        img.setAttribute('alt', `photo-${i + 1}`);
-      });
+      
 
       if (k !== 1) {
-        const source = imagesArr.slice(0, k);
-        source.forEach((item, i) => {
-          const div = document.createElement('div');
-          cardWrap.appendChild(div);
-          const img = document.createElement('img');
-          div.appendChild(img);
-          img.setAttribute('src', item);
-          div.classList.add('item');
-          img.setAttribute('alt', `photo-${i + 1}`);
-        });
+        source = [...source, ...imagesArr.slice(0, k)];
+        addSlide(source, true, false);
         start = k - 1 - 4;
+      } else {
+        addSlide(source, true, false);
       }
-   
-  }
-});
+    }, 250);
+  });
 
-
-document.getElementById('right-arrow').addEventListener('click', () => {
-  if (cardWrap) {
+  document.getElementById('left-arrow').addEventListener('click', () => {
     start = start === 0 ? imagesArr.length : start;
-
-    console.log(start);
     const a = start;
     let b = start - 4;
-    console.log('a,b1: ', a, b);
     let k = 0;
     while (b < 0) {
       b++;
       k++;
     }
 
-
     const source = imagesArr.slice(b, a);
-    Array.from(document.querySelectorAll('.card-wrap>.item')).forEach((item) =>
-      item.remove()
+    Array.from(document.querySelectorAll('.card-wrap>.item')).forEach(
+      (item, i) => {
+        setTimeout(() => {
+          item.style.transform = 'translateX(100vw)';
+        }, 250 / (i + 1));
+      }
     );
+    setTimeout(() => {
+      Array.from(document.querySelectorAll('.card-wrap>.item')).forEach(
+        (item) => item.remove()
+      );
 
+      if (k !== 0) {
+        let source = imagesArr.slice(imagesArr.length - k, imagesArr.length);
+        source = [...source, ...imagesArr.slice(b, a)];
+        addSlide(source, true);
+        start = imagesArr.length - k;
+      } else {
+        addSlide(source, true);
+        start -= 4;
+      }
+    }, 200);
+  });
 
-    if (k !== 0) {
-      let source = imagesArr.slice(imagesArr.length - k, imagesArr.length);
-      source.forEach((item, i) => {
-        const div = document.createElement('div');
-        cardWrap.appendChild(div);
-        const img = document.createElement('img');
-        div.appendChild(img);
-        img.setAttribute('src', item);
-        div.classList.add('item');
-        img.setAttribute('alt', `photo-${i + 1}`);
-      });
-      source = imagesArr.slice(b, a);
-      source.forEach((item, i) => {
-        const div = document.createElement('div');
-        cardWrap.appendChild(div);
-        const img = document.createElement('img');
-        div.appendChild(img);
-        img.setAttribute('src', item);
-        div.classList.add('item');
-        img.setAttribute('alt', `photo-${i + 1}`);
-      });
-      start = imagesArr.length - k;
-    } else {
-      source.forEach((item, i) => {
-        const div = document.createElement('div');
-        cardWrap.appendChild(div);
-        const img = document.createElement('img');
-        div.appendChild(img);
-        img.setAttribute('src', item);
-        div.classList.add('item');
-        img.setAttribute('alt', `photo-${i + 1}`);
-      });
-      start -= 4;
-    }
+  function addSlide(source, isAnimate = false, isLeft = true) {
+    source.forEach((item, i) => {
+      const div = document.createElement('div');
+      cardWrap.appendChild(div);
+      if (isAnimate) {
+        div.style.transform = `${isLeft ? "translateX(-100vw)" : "translateX(100vw)"} `;
+        setTimeout(() => {
+          addImage(div, item, i);
+          div.style.transform = 'translateX(0)';
+        }, `${isLeft ? 250 / (i + 1): (i+1)*50}`);
+      } else {
+        addImage(div, item, i);
+      }
+    });
   }
-});
+
+  function addImage(div, item, i) {
+    const img = document.createElement('img');
+    div.appendChild(img);
+    img.setAttribute('src', item);
+    div.classList.add('item');
+    img.setAttribute('alt', `photo-${i + 1}`);
+  }
+}

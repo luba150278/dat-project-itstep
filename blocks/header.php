@@ -13,6 +13,7 @@
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
   <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../src/css/style.css">
 </head>
 
@@ -59,7 +60,7 @@
               </div>
               <div class="login flex-aic">
                 <a href="#">Вхід</a>
-                <a href="#">Реєстрація</a>
+                <a href="/registration.php">Реєстрація</a>
               </div>
             </div>
           </div>

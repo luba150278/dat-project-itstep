@@ -273,6 +273,7 @@ handleRegistration();
 const COUNT_SLIDES = 4;
 const TIME_PER_SLIDE = 50;
 const COMM0N_TIME = COUNT_SLIDES * TIME_PER_SLIDE;
+
 const imagesArr = [
   'images/products/1n.png',
   'images/products/2n.png',
@@ -285,10 +286,10 @@ const imagesArr = [
   'images/products/9n.png',
   'images/products/10n.png',
   'images/products/11n.png',
-  'images/products/12n.png',
-  'images/products/13n.png',
-  'images/products/14n.png',
-  'images/products/15n.png',
+  // 'images/products/12n.png',
+  // 'images/products/13n.png',
+  // 'images/products/14n.png',
+  // 'images/products/15n.png',
 ];
 
 const cardWrap = document.querySelector('.card-wrap');
@@ -392,3 +393,50 @@ if (cardWrap) {
     img.setAttribute('alt', `photo-${i + 1}`);
   }
 }
+
+// const swiper = new Swiper('.swiper-container', {
+//   // Optional parameters
+//   slidesPerView: 4,
+//   spaceBetween: 10,
+//   loop: true,
+
+//   // If we need pagination
+//   pagination: {
+//     el: '.swiper-pagination',
+//   },
+
+//   // Navigation arrows
+//   navigation: {
+//     nextEl: '.swiper-button-next',
+//     prevEl: '.swiper-button-prev',
+//   },
+// });
+
+new Splide('.splide', {
+  type: 'loop',
+  height: '355px',
+  perPage: 4,
+  breakpoints: {
+    1024: {
+      perPage: 3,
+    },
+    768: {
+      perPage: 2,
+    },
+    450: {
+      perPage: 1,
+      arrows: false,
+    },
+  },
+}).mount();
+
+function changeSliderArrows() {
+  Array.from(document.getElementsByClassName('splide__arrow')).forEach((item) => {
+    item.innerHTML = '';
+    item.innerHTML =
+      '<svg height="512" viewBox="0 0 64 64" width="512" xmlns="http://www.w3.org/2000/svg" fill="#84c551"><g id="Layer_27" data-name="Layer 27"><path d="m60 30h-51.17l8.58-8.59a2 2 0 0 0 -2.82-2.82l-12 12a2.06 2.06 0 0 0 -.59 1.8 2.16 2.16 0 0 0 .55 1l12 12a2 2 0 1 0 2.82-2.82l-8.54-8.57h51.17a2 2 0 0 0 0-4z" /></g></svg>';
+  });
+}
+changeSliderArrows();
+
+window.onresize = changeSliderArrows;

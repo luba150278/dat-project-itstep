@@ -270,7 +270,9 @@ async function handleRegistration() {
 handleRegistration();
 
 //=============SLIDER NEWS===========
-
+const COUNT_SLIDES = 4;
+const TIME_PER_SLIDE = 50;
+const COMM0N_TIME = COUNT_SLIDES * TIME_PER_SLIDE;
 const imagesArr = [
   'images/products/1n.png',
   'images/products/2n.png',
@@ -292,12 +294,12 @@ const imagesArr = [
 const cardWrap = document.querySelector('.card-wrap');
 
 if (cardWrap) {
-  addSlide(imagesArr.slice(0, 4));
+  addSlide(imagesArr.slice(0, COUNT_SLIDES));
   let start = 0;
   document.getElementById('right-arrow').addEventListener('click', () => {
-    start += 4;
+    start += COUNT_SLIDES;
     let a = start;
-    let b = start + 4;
+    let b = start + COUNT_SLIDES;
     let k = 1;
 
     while (b > imagesArr.length) {
@@ -310,7 +312,7 @@ if (cardWrap) {
       (item, i) => {
         setTimeout(() => {
           item.style.transform = 'translateX(-100vw)';
-        }, i * 50);
+        }, i * TIME_PER_SLIDE);
       }
     );
 
@@ -318,22 +320,21 @@ if (cardWrap) {
       Array.from(document.querySelectorAll('.card-wrap>.item')).forEach(
         (item) => item.remove()
       );
-      
 
       if (k !== 1) {
         source = [...source, ...imagesArr.slice(0, k)];
         addSlide(source, true, false);
-        start = k - 1 - 4;
+        start = k - 1 - COUNT_SLIDES;
       } else {
         addSlide(source, true, false);
       }
-    }, 250);
+    }, COMM0N_TIME + TIME_PER_SLIDE);
   });
 
   document.getElementById('left-arrow').addEventListener('click', () => {
     start = start === 0 ? imagesArr.length : start;
     const a = start;
-    let b = start - 4;
+    let b = start - COUNT_SLIDES;
     let k = 0;
     while (b < 0) {
       b++;
@@ -345,7 +346,7 @@ if (cardWrap) {
       (item, i) => {
         setTimeout(() => {
           item.style.transform = 'translateX(100vw)';
-        }, 250 / (i + 1));
+        }, (COMM0N_TIME + TIME_PER_SLIDE) / (i + 1));
       }
     );
     setTimeout(() => {
@@ -360,9 +361,9 @@ if (cardWrap) {
         start = imagesArr.length - k;
       } else {
         addSlide(source, true);
-        start -= 4;
+        start -= COUNT_SLIDES;
       }
-    }, 200);
+    }, COMM0N_TIME);
   });
 
   function addSlide(source, isAnimate = false, isLeft = true) {
@@ -370,11 +371,13 @@ if (cardWrap) {
       const div = document.createElement('div');
       cardWrap.appendChild(div);
       if (isAnimate) {
-        div.style.transform = `${isLeft ? "translateX(-100vw)" : "translateX(100vw)"} `;
+        div.style.transform = `${
+          isLeft ? 'translateX(-100vw)' : 'translateX(100vw)'
+        } `;
         setTimeout(() => {
           addImage(div, item, i);
           div.style.transform = 'translateX(0)';
-        }, `${isLeft ? 250 / (i + 1): (i+1)*50}`);
+        }, `${isLeft ? (COMM0N_TIME + TIME_PER_SLIDE) / (i + 1) : (i + 1) * TIME_PER_SLIDE}`);
       } else {
         addImage(div, item, i);
       }
